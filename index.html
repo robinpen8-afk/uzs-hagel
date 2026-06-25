@@ -305,6 +305,99 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
   <div class="card" id="legend-list"></div>
 </div>
 
+<!-- DRAWER CALCUL INLINE (slide up depuis Voertuig) -->
+<div id="calc-drawer" style="display:none;position:fixed;inset:0;z-index:150">
+  <!-- Overlay semi-transparent -->
+  <div onclick="closeDrawer()" style="position:absolute;inset:0;background:rgba(0,0,0,.35)"></div>
+  <!-- Panneau bas -->
+  <div id="calc-panel" style="position:absolute;bottom:56px;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;transition:transform .3s;transform:translateY(100%)">
+    <!-- Handle -->
+    <div style="display:flex;justify-content:center;padding:10px 0 4px">
+      <div style="width:36px;height:4px;border-radius:2px;background:#D1D1D6"></div>
+    </div>
+    <!-- Header élément -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 16px 12px">
+      <div id="drawer-title" style="font-size:16px;font-weight:700;color:#1C1C1E"></div>
+      <button onclick="resetDrawerEl()" style="background:rgba(26,111,181,.1);border:none;color:#1A6FB5;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer">↺ Reset</button>
+    </div>
+    <!-- Barre résultats -->
+    <div style="background:#1A6FB5;margin:0 12px 14px;border-radius:14px;padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div style="text-align:center"><div style="font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:3px">Total AE</div><div id="d_total_ae" style="font-size:20px;font-weight:700;color:#fff">0</div></div>
+      <div style="text-align:center"><div style="font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:3px">Heures · Uren</div><div id="d_heures" style="font-size:20px;font-weight:700;color:#fff">0.0</div></div>
+      <div style="text-align:center"><div style="font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:3px">Coût · Kost</div><div id="d_cout" style="font-size:20px;font-weight:700;color:rgba(255,255,255,.85)">€0</div></div>
+    </div>
+    <!-- 4 cards impacts côte à côte -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:0 12px 12px">
+      <!-- Ø10 -->
+      <div style="background:#F2F2F7;border-radius:14px;padding:10px 6px;text-align:center">
+        <div style="background:rgba(26,111,181,.12);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1A6FB5;margin:0 auto 6px">Ø10</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:5px">
+          <button class="brnd bm" onclick="dadj(0,-1)" style="width:30px;height:30px;border-radius:50%;background:#E5E5EA;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+          <input type="number" id="d_i10" value="0" min="0" inputmode="numeric" oninput="calcDrawer()" style="width:36px;text-align:center;font-size:16px;font-weight:700;border:1.5px solid #E5E5EA;border-radius:8px;padding:4px 2px;outline:none">
+          <button class="brnd bp" onclick="dadj(0,1)" style="width:30px;height:30px;border-radius:50%;background:#1A6FB5;color:#fff;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        </div>
+        <div style="font-size:10px;color:#8E8E93">AE: <b id="d_ae10" style="color:#1A6FB5">0</b></div>
+      </div>
+      <!-- Ø20 -->
+      <div style="background:#F2F2F7;border-radius:14px;padding:10px 6px;text-align:center">
+        <div style="background:rgba(26,111,181,.12);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1A6FB5;margin:0 auto 6px">Ø20</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:5px">
+          <button onclick="dadj(1,-1)" style="width:30px;height:30px;border-radius:50%;background:#E5E5EA;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+          <input type="number" id="d_i20" value="0" min="0" inputmode="numeric" oninput="calcDrawer()" style="width:36px;text-align:center;font-size:16px;font-weight:700;border:1.5px solid #E5E5EA;border-radius:8px;padding:4px 2px;outline:none">
+          <button onclick="dadj(1,1)" style="width:30px;height:30px;border-radius:50%;background:#1A6FB5;color:#fff;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        </div>
+        <div style="font-size:10px;color:#8E8E93">AE: <b id="d_ae20" style="color:#1A6FB5">0</b></div>
+      </div>
+      <!-- Ø30 -->
+      <div style="background:#F2F2F7;border-radius:14px;padding:10px 6px;text-align:center">
+        <div style="background:rgba(26,111,181,.12);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1A6FB5;margin:0 auto 6px">Ø30</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:5px">
+          <button onclick="dadj(2,-1)" style="width:30px;height:30px;border-radius:50%;background:#E5E5EA;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+          <input type="number" id="d_i30" value="0" min="0" inputmode="numeric" oninput="calcDrawer()" style="width:36px;text-align:center;font-size:16px;font-weight:700;border:1.5px solid #E5E5EA;border-radius:8px;padding:4px 2px;outline:none">
+          <button onclick="dadj(2,1)" style="width:30px;height:30px;border-radius:50%;background:#1A6FB5;color:#fff;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        </div>
+        <div style="font-size:10px;color:#8E8E93">AE: <b id="d_ae30" style="color:#1A6FB5">0</b></div>
+      </div>
+      <!-- >30 -->
+      <div style="background:#F2F2F7;border-radius:14px;padding:10px 6px;text-align:center">
+        <div style="background:rgba(26,111,181,.12);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1A6FB5;margin:0 auto 6px">&gt;30</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:5px">
+          <button onclick="dadj(3,-1)" style="width:30px;height:30px;border-radius:50%;background:#E5E5EA;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+          <input type="number" id="d_ix" value="0" min="0" inputmode="numeric" oninput="calcDrawer()" style="width:36px;text-align:center;font-size:16px;font-weight:700;border:1.5px solid #E5E5EA;border-radius:8px;padding:4px 2px;outline:none">
+          <button onclick="dadj(3,1)" style="width:30px;height:30px;border-radius:50%;background:#1A6FB5;color:#fff;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        </div>
+        <div style="font-size:10px;color:#8E8E93">AE: <b id="d_aex" style="color:#1A6FB5">0</b></div>
+      </div>
+    </div>
+    <!-- Paramètres propres compacts -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 12px">
+      <div style="background:#F2F2F7;border-radius:12px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Taux / Tarief €/h</div>
+        <input type="number" id="d_taux" value="70" min="0" oninput="calcDrawer()" style="border:none;outline:none;font-size:20px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+      </div>
+      <div style="background:#F2F2F7;border-radius:12px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">1 werkuur = AE</div>
+        <input type="number" id="d_aeh" value="10" min="1" oninput="calcDrawer()" style="border:none;outline:none;font-size:20px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+      </div>
+    </div>
+    <!-- Toggles kleeft / alu -->
+    <div style="background:#F2F2F7;border-radius:12px;margin:0 12px 12px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #E5E5EA">
+        <span style="font-size:14px;flex:1">🩹 Kleeftechniek +15%</span>
+        <label style="position:relative;width:46px;height:26px;flex-shrink:0"><input type="checkbox" id="d_kleeft" onchange="calcDrawer()" style="opacity:0;width:0;height:0"><span id="d_kleeft_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:26px;cursor:pointer;transition:.2s"></span><span id="d_kleeft_th" style="position:absolute;width:22px;height:22px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></label>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px">
+        <span style="font-size:14px;flex:1">🔩 Aluminium +25%</span>
+        <label style="position:relative;width:46px;height:26px;flex-shrink:0"><input type="checkbox" id="d_alum" onchange="calcDrawer()" style="opacity:0;width:0;height:0"><span id="d_alum_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:26px;cursor:pointer;transition:.2s"></span><span id="d_alum_th" style="position:absolute;width:22px;height:22px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></label>
+      </div>
+    </div>
+    <!-- Bouton sauvegarder -->
+    <div style="padding:0 12px 20px">
+      <button onclick="saveDrawer()" style="width:100%;background:#1A6FB5;color:#fff;border:none;padding:14px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">✓ Opslaan · Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
 <!-- SUPPLEMENTS -->
 <div id="page-supplements" class="page">
   <div class="sec-title">Suppléments · Supplementen</div>
@@ -578,52 +671,83 @@ function buildLegend(){
 function openZone(id){
   currentEl=id;
   const el=ELEMENTS.find(e=>e.id===id),d=DATA[id];
-  document.getElementById('modal-title').textContent=el.label;
-  document.getElementById('m_i10').value=d.i10;
-  document.getElementById('m_i20').value=d.i20;
-  document.getElementById('m_i30').value=d.i30;
-  document.getElementById('m_ix').value=d.ix;
-  document.getElementById('m_taux').value=d.taux;
-  document.getElementById('m_aeh').value=d.aeh;
-  document.getElementById('m_kleeft').checked=d.kleeft;
-  document.getElementById('m_alum').checked=d.alum;
-  calcModal();
-  document.getElementById('modal-el').classList.add('open');
-  document.getElementById('modal-el').querySelector('.modal-body').scrollTop=0;
+  document.getElementById('drawer-title').textContent=el.label;
+  document.getElementById('d_i10').value=d.i10;
+  document.getElementById('d_i20').value=d.i20;
+  document.getElementById('d_i30').value=d.i30;
+  document.getElementById('d_ix').value=d.ix;
+  document.getElementById('d_taux').value=d.taux;
+  document.getElementById('d_aeh').value=d.aeh;
+  document.getElementById('d_kleeft').checked=d.kleeft;
+  document.getElementById('d_alum').checked=d.alum;
+  updateToggleStyle('d_kleeft',d.kleeft);
+  updateToggleStyle('d_alum',d.alum);
+  calcDrawer();
+  const drawer=document.getElementById('calc-drawer');
+  const panel=document.getElementById('calc-panel');
+  drawer.style.display='block';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{panel.style.transform='translateY(0)';}));
 }
 
-function closeModal(){document.getElementById('modal-el').classList.remove('open');currentEl=null;}
-function resetElement(){['m_i10','m_i20','m_i30','m_ix'].forEach(id=>document.getElementById(id).value=0);calcModal();showToast('↺ Reset');}
-
-function getModalData(){
-  return{i10:+document.getElementById('m_i10').value||0,i20:+document.getElementById('m_i20').value||0,
-    i30:+document.getElementById('m_i30').value||0,ix:+document.getElementById('m_ix').value||0,
-    taux:+document.getElementById('m_taux').value||70,aeh:+document.getElementById('m_aeh').value||10,
-    kleeft:document.getElementById('m_kleeft').checked,alum:document.getElementById('m_alum').checked};
+function updateToggleStyle(id,checked){
+  const sl=document.getElementById(id+'_sl');
+  const th=document.getElementById(id+'_th');
+  if(sl){sl.style.background=checked?'#34C759':'#D1D1D6';}
+  if(th){th.style.transform=checked?'translateX(20px)':'translateX(0)';}
 }
 
-function calcModal(){
-  const d=getModalData(),r=calcAE(d);
-  document.getElementById('m_ae10').textContent=r.ae10;
-  document.getElementById('m_ae20').textContent=r.ae20;
-  document.getElementById('m_ae30').textContent=r.ae30;
-  document.getElementById('m_aex').textContent=r.aex;
-  document.getElementById('m_total_ae').textContent=r.totalAE;
-  document.getElementById('m_heures').textContent=r.heures.toFixed(1);
-  document.getElementById('m_cout').textContent='€'+r.cout.toFixed(2);
+function closeDrawer(){
+  const panel=document.getElementById('calc-panel');
+  panel.style.transform='translateY(100%)';
+  setTimeout(()=>{document.getElementById('calc-drawer').style.display='none';},300);
+  currentEl=null;
 }
 
-function adj(f,delta){
-  const ids=['m_i10','m_i20','m_i30','m_ix'];
+function resetDrawerEl(){
+  ['d_i10','d_i20','d_i30','d_ix'].forEach(id=>document.getElementById(id).value=0);
+  calcDrawer();showToast('↺ Reset');
+}
+
+function getDrawerData(){
+  return{i10:+document.getElementById('d_i10').value||0,i20:+document.getElementById('d_i20').value||0,
+    i30:+document.getElementById('d_i30').value||0,ix:+document.getElementById('d_ix').value||0,
+    taux:+document.getElementById('d_taux').value||70,aeh:+document.getElementById('d_aeh').value||10,
+    kleeft:document.getElementById('d_kleeft').checked,alum:document.getElementById('d_alum').checked};
+}
+
+function calcDrawer(){
+  const d=getDrawerData(),r=calcAE(d);
+  document.getElementById('d_ae10').textContent=r.ae10;
+  document.getElementById('d_ae20').textContent=r.ae20;
+  document.getElementById('d_ae30').textContent=r.ae30;
+  document.getElementById('d_aex').textContent=r.aex;
+  document.getElementById('d_total_ae').textContent=r.totalAE;
+  document.getElementById('d_heures').textContent=r.heures.toFixed(1);
+  document.getElementById('d_cout').textContent='€'+r.cout.toFixed(2);
+  // Update toggle styles
+  updateToggleStyle('d_kleeft',document.getElementById('d_kleeft').checked);
+  updateToggleStyle('d_alum',document.getElementById('d_alum').checked);
+}
+
+function dadj(f,delta){
+  const ids=['d_i10','d_i20','d_i30','d_ix'];
   const el=document.getElementById(ids[f]);
-  el.value=Math.max(0,(+el.value||0)+delta);calcModal();
+  el.value=Math.max(0,(+el.value||0)+delta);calcDrawer();
 }
 
-function saveModal(){
+function saveDrawer(){
   if(!currentEl)return;
-  DATA[currentEl]=getModalData();
-  closeModal();buildLegend();showToast('✓ Opgeslagen');
+  DATA[currentEl]=getDrawerData();
+  closeDrawer();buildLegend();showToast('✓ Opgeslagen');
 }
+
+// Anciennes fonctions modal (gardées pour compatibilité)
+function closeModal(){document.getElementById('modal-el').classList.remove('open');currentEl=null;}
+function resetElement(){resetDrawerEl();}
+function getModalData(){return getDrawerData();}
+function calcModal(){}
+function adj(f,delta){dadj(f,delta);}
+function saveModal(){saveDrawer();}
 
 function buildRecap(){
   const list=document.getElementById('recap-list');list.innerHTML='';
