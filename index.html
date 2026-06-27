@@ -171,9 +171,9 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
 
 <div class="topbar">
   <div class="tb-title">UZS Hagel<small>Hagelschade · Grêle</small></div>
-  <button class="tb-btn" onclick="exportExcel()" title="Export Excel">⬇</button>
-  <button class="tb-btn" onclick="exportEmail()" title="Email">✉️</button>
-  <button class="tb-btn" onclick="openConfirm()" title="Reset" style="font-size:15px">↺</button>
+  <button class="tb-btn" onclick="exportExcel()" title="Export Excel" style="font-size:15px;font-weight:700;letter-spacing:-.02em">XLS</button>
+  <button class="tb-btn" onclick="exportPDF()" title="PDF" style="font-size:15px;font-weight:700">PDF</button>
+  <button class="tb-btn" onclick="openConfirm()" title="Reset" style="font-size:16px">⟳</button>
 </div>
 
 <div class="scroll-area">
@@ -184,7 +184,7 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
   <div class="card">
     <div class="field-row">
       <div class="field-cell"><div class="field-lbl">Dossier nr</div><input type="text" id="dossier_nr" placeholder="2024-001"></div>
-      <div class="field-cell"><div class="field-lbl">Datum · Date</div><input type="date" id="datum" readonly></div>
+      <div class="field-cell"><div class="field-lbl">Datum · Date</div><input type="date" id="datum"></div>
     </div>
     <div class="field-row">
       <div class="field-cell"><div class="field-lbl">Nr plaat · Plaque</div><input type="text" id="plaat" placeholder="1-ABC-234"></div>
@@ -220,89 +220,152 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
 </div>
 
 <!-- VEHICULE -->
-<div id="page-elements" class="page">
-  <div class="sec-title">Toucher la zone · Tik de zone</div>
-  <div class="card" style="padding:14px">
-    <div style="position:relative;width:100%;max-width:300px;margin:0 auto">
-      <svg viewBox="0 0 300 510" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
-        <rect x="82" y="58" width="136" height="374" rx="40" fill="#F2F2F7" stroke="#D1D1D6" stroke-width="2"/>
-        <rect x="97" y="138" width="106" height="194" rx="8" fill="#E5E5EA" stroke="#C7C7CC" stroke-width="1"/>
-        <rect x="92" y="118" width="116" height="26" rx="5" fill="#D1D1D6" stroke="#C7C7CC" stroke-width="1"/>
-        <rect x="92" y="356" width="116" height="22" rx="5" fill="#D1D1D6" stroke="#C7C7CC" stroke-width="1"/>
-        <ellipse cx="84" cy="152" rx="17" ry="25" fill="#8E8E93" stroke="#636366" stroke-width="1.5"/>
-        <ellipse cx="216" cy="152" rx="17" ry="25" fill="#8E8E93" stroke="#636366" stroke-width="1.5"/>
-        <ellipse cx="84" cy="354" rx="17" ry="25" fill="#8E8E93" stroke="#636366" stroke-width="1.5"/>
-        <ellipse cx="216" cy="354" rx="17" ry="25" fill="#8E8E93" stroke="#636366" stroke-width="1.5"/>
-        <!-- ZONES -->
-        <g class="zone" id="z-motorkap" onclick="openZone('motorkap')" style="cursor:pointer">
-          <rect x="90" y="60" width="120" height="54" rx="22" fill="#1A6FB5" opacity="0.15" stroke="#1A6FB5" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <text x="150" y="84" text-anchor="middle" font-size="8.5" fill="#1A6FB5" font-weight="700">MOTORKAP</text>
-          <text x="150" y="96" text-anchor="middle" font-size="7.5" fill="#1A6FB5">Capot</text>
-        </g>
-        <g class="zone" id="z-dak" onclick="openZone('dak')" style="cursor:pointer">
-          <rect x="99" y="140" width="102" height="190" rx="6" fill="#1A6FB5" opacity="0.15" stroke="#1A6FB5" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <text x="150" y="232" text-anchor="middle" font-size="8.5" fill="#1A6FB5" font-weight="700">DAK</text>
-          <text x="150" y="244" text-anchor="middle" font-size="7.5" fill="#1A6FB5">Pavillon</text>
-        </g>
-        <g class="zone" id="z-hayon" onclick="openZone('hayon')" style="cursor:pointer">
-          <rect x="90" y="382" width="120" height="46" rx="18" fill="#1A6FB5" opacity="0.15" stroke="#1A6FB5" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <text x="150" y="403" text-anchor="middle" font-size="8.5" fill="#1A6FB5" font-weight="700">HAYON</text>
-          <text x="150" y="415" text-anchor="middle" font-size="7.5" fill="#1A6FB5">Kofferdeksel</text>
-        </g>
-        <g id="z-spb_av_g" onclick="openZone('spb_av_g')" style="cursor:pointer">
-          <rect x="60" y="108" width="36" height="68" rx="7" fill="#007AFF" opacity="0.15" stroke="#007AFF" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="78" y="139" text-anchor="middle" font-size="7" fill="#007AFF" font-weight="700">SPB AV</text>
-          <text x="78" y="150" text-anchor="middle" font-size="7" fill="#007AFF">G · L</text>
-        </g>
-        <g id="z-prt_av_g" onclick="openZone('prt_av_g')" style="cursor:pointer">
-          <rect x="60" y="182" width="36" height="74" rx="5" fill="#5856D6" opacity="0.15" stroke="#5856D6" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="78" y="217" text-anchor="middle" font-size="7" fill="#5856D6" font-weight="700">PRT AV</text>
-          <text x="78" y="228" text-anchor="middle" font-size="7" fill="#5856D6">G · L</text>
-        </g>
-        <g id="z-prt_ar_g" onclick="openZone('prt_ar_g')" style="cursor:pointer">
-          <rect x="60" y="262" width="36" height="70" rx="5" fill="#5856D6" opacity="0.15" stroke="#5856D6" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="78" y="296" text-anchor="middle" font-size="7" fill="#5856D6" font-weight="700">PRT AR</text>
-          <text x="78" y="307" text-anchor="middle" font-size="7" fill="#5856D6">G · L</text>
-        </g>
-        <g id="z-spb_ar_g" onclick="openZone('spb_ar_g')" style="cursor:pointer">
-          <rect x="60" y="338" width="36" height="58" rx="7" fill="#007AFF" opacity="0.15" stroke="#007AFF" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="78" y="365" text-anchor="middle" font-size="7" fill="#007AFF" font-weight="700">SPB AR</text>
-          <text x="78" y="376" text-anchor="middle" font-size="7" fill="#007AFF">G · L</text>
-        </g>
-        <g id="z-spb_av_d" onclick="openZone('spb_av_d')" style="cursor:pointer">
-          <rect x="204" y="108" width="36" height="68" rx="7" fill="#007AFF" opacity="0.15" stroke="#007AFF" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="222" y="139" text-anchor="middle" font-size="7" fill="#007AFF" font-weight="700">SPB AV</text>
-          <text x="222" y="150" text-anchor="middle" font-size="7" fill="#007AFF">D · R</text>
-        </g>
-        <g id="z-prt_av_d" onclick="openZone('prt_av_d')" style="cursor:pointer">
-          <rect x="204" y="182" width="36" height="74" rx="5" fill="#5856D6" opacity="0.15" stroke="#5856D6" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="222" y="217" text-anchor="middle" font-size="7" fill="#5856D6" font-weight="700">PRT AV</text>
-          <text x="222" y="228" text-anchor="middle" font-size="7" fill="#5856D6">D · R</text>
-        </g>
-        <g id="z-prt_ar_d" onclick="openZone('prt_ar_d')" style="cursor:pointer">
-          <rect x="204" y="262" width="36" height="70" rx="5" fill="#5856D6" opacity="0.15" stroke="#5856D6" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="222" y="296" text-anchor="middle" font-size="7" fill="#5856D6" font-weight="700">PRT AR</text>
-          <text x="222" y="307" text-anchor="middle" font-size="7" fill="#5856D6">D · R</text>
-        </g>
-        <g id="z-spb_ar_d" onclick="openZone('spb_ar_d')" style="cursor:pointer">
-          <rect x="204" y="338" width="36" height="58" rx="7" fill="#007AFF" opacity="0.15" stroke="#007AFF" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="222" y="365" text-anchor="middle" font-size="7" fill="#007AFF" font-weight="700">SPB AR</text>
-          <text x="222" y="376" text-anchor="middle" font-size="7" fill="#007AFF">D · R</text>
-        </g>
-        <g id="z-dkr_g" onclick="openZone('dkr_g')" style="cursor:pointer">
-          <rect x="99" y="172" width="44" height="52" rx="4" fill="#FF9500" opacity="0.2" stroke="#FF9500" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="121" y="197" text-anchor="middle" font-size="7" fill="#C97300" font-weight="700">DKR G·L</text>
-        </g>
-        <g id="z-dkr_d" onclick="openZone('dkr_d')" style="cursor:pointer">
-          <rect x="157" y="172" width="44" height="52" rx="4" fill="#FF9500" opacity="0.2" stroke="#FF9500" stroke-width="1.5" stroke-dasharray="3,2"/>
-          <text x="179" y="197" text-anchor="middle" font-size="7" fill="#C97300" font-weight="700">DKR D·R</text>
-        </g>
-      </svg>
+<div id="page-elements" class="page" style="padding:8px">
+
+  <!-- SVG GRAND FORMAT paysage -->
+  <div style="position:relative;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:10px;padding:6px">
+    <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+
+      <!-- CARROSSERIE principale -->
+      <rect x="70" y="20" width="360" height="200" rx="38" fill="#E8EDF2" stroke="#C5D3E8" stroke-width="2"/>
+
+      <!-- Vitre AV (pare-brise) -->
+      <rect x="118" y="24" width="38" height="192" rx="6" fill="#C8DCF0" stroke="#9BBAD8" stroke-width="1"/>
+
+      <!-- Habitacle (toit) -->
+      <rect x="158" y="28" width="184" height="184" rx="5" fill="#D6E8F8" stroke="#9BBAD8" stroke-width="1"/>
+
+      <!-- Vitre AR (lunette) -->
+      <rect x="344" y="24" width="38" height="192" rx="6" fill="#C8DCF0" stroke="#9BBAD8" stroke-width="1"/>
+
+      <!-- Roues AV -->
+      <rect x="90" y="8" width="60" height="22" rx="11" fill="#6B7A8D" stroke="#4A5568" stroke-width="1.5"/>
+      <rect x="90" y="210" width="60" height="22" rx="11" fill="#6B7A8D" stroke="#4A5568" stroke-width="1.5"/>
+
+      <!-- Roues AR -->
+      <rect x="350" y="8" width="60" height="22" rx="11" fill="#6B7A8D" stroke="#4A5568" stroke-width="1.5"/>
+      <rect x="350" y="210" width="60" height="22" rx="11" fill="#6B7A8D" stroke="#4A5568" stroke-width="1.5"/>
+
+      <!-- ═══ ZONES CLIQUABLES ═══ -->
+
+      <!-- MOTORKAP — côté gauche (avant) -->
+      <g id="z-motorkap" onclick="openZone('motorkap')" style="cursor:pointer">
+        <rect x="70" y="20" width="50" height="200" rx="30" fill="#1A6FB5" opacity="0.22" stroke="#1A6FB5" stroke-width="2"/>
+        <text x="95" y="113" text-anchor="middle" font-size="9" fill="#1A6FB5" font-weight="800">MOTOR</text>
+        <text x="95" y="126" text-anchor="middle" font-size="9" fill="#1A6FB5" font-weight="800">KAP</text>
+      </g>
+
+      <!-- HAYON — côté droit (arrière) -->
+      <g id="z-hayon" onclick="openZone('hayon')" style="cursor:pointer">
+        <rect x="380" y="20" width="50" height="200" rx="30" fill="#1A6FB5" opacity="0.22" stroke="#1A6FB5" stroke-width="2"/>
+        <text x="405" y="113" text-anchor="middle" font-size="9" fill="#1A6FB5" font-weight="800">HAYON</text>
+      </g>
+
+      <!-- DAK — centre (toit) -->
+      <g id="z-dak" onclick="openZone('dak')" style="cursor:pointer">
+        <rect x="158" y="28" width="184" height="184" rx="5" fill="#1A6FB5" opacity="0.18" stroke="#1A6FB5" stroke-width="2"/>
+        <text x="250" y="185" text-anchor="middle" font-size="10" fill="#1A6FB5" font-weight="800">DAK</text>
+      </g>
+
+      <!-- DAKRAAM RECHTS — haut dans le toit -->
+      <g id="z-dkr_d" onclick="openZone('dkr_d')" style="cursor:pointer">
+        <rect x="166" y="36" width="80" height="72" rx="7" fill="#FF9500" opacity="0.35" stroke="#FF9500" stroke-width="2" stroke-dasharray="4,2"/>
+        <text x="206" y="70" text-anchor="middle" font-size="8.5" fill="#C97300" font-weight="800">DKR</text>
+        <text x="206" y="83" text-anchor="middle" font-size="8" fill="#C97300" font-weight="700">Rechts</text>
+      </g>
+
+      <!-- DAKRAAM LINKS — bas dans le toit -->
+      <g id="z-dkr_g" onclick="openZone('dkr_g')" style="cursor:pointer">
+        <rect x="166" y="132" width="80" height="72" rx="7" fill="#FF9500" opacity="0.35" stroke="#FF9500" stroke-width="2" stroke-dasharray="4,2"/>
+        <text x="206" y="166" text-anchor="middle" font-size="8.5" fill="#C97300" font-weight="800">DKR</text>
+        <text x="206" y="179" text-anchor="middle" font-size="8" fill="#C97300" font-weight="700">Links</text>
+      </g>
+
+      <!-- PORTE AV + PORTE AR — bande haut (Rechts) -->
+      <g id="z-prt_av_d" onclick="openZone('prt_av_d')" style="cursor:pointer">
+        <rect x="120" y="20" width="96" height="38" rx="5" fill="#5856D6" opacity="0.22" stroke="#5856D6" stroke-width="2"/>
+        <text x="168" y="43" text-anchor="middle" font-size="8" fill="#5856D6" font-weight="800">PORTE AV</text>
+      </g>
+      <g id="z-prt_ar_d" onclick="openZone('prt_ar_d')" style="cursor:pointer">
+        <rect x="284" y="20" width="96" height="38" rx="5" fill="#5856D6" opacity="0.22" stroke="#5856D6" stroke-width="2"/>
+        <text x="332" y="43" text-anchor="middle" font-size="8" fill="#5856D6" font-weight="800">PORTE AR</text>
+      </g>
+
+      <!-- PORTE AV + PORTE AR — bande bas (Links) -->
+      <g id="z-prt_av_g" onclick="openZone('prt_av_g')" style="cursor:pointer">
+        <rect x="120" y="182" width="96" height="38" rx="5" fill="#5856D6" opacity="0.22" stroke="#5856D6" stroke-width="2"/>
+        <text x="168" y="205" text-anchor="middle" font-size="8" fill="#5856D6" font-weight="800">PORTE AV</text>
+      </g>
+      <g id="z-prt_ar_g" onclick="openZone('prt_ar_g')" style="cursor:pointer">
+        <rect x="284" y="182" width="96" height="38" rx="5" fill="#5856D6" opacity="0.22" stroke="#5856D6" stroke-width="2"/>
+        <text x="332" y="205" text-anchor="middle" font-size="8" fill="#5856D6" font-weight="800">PORTE AR</text>
+      </g>
+
+      <!-- SPB AV haut (Rechts) -->
+      <g id="z-spb_av_d" onclick="openZone('spb_av_d')" style="cursor:pointer">
+        <rect x="70" y="20" width="52" height="38" rx="8" fill="#007AFF" opacity="0.22" stroke="#007AFF" stroke-width="2"/>
+        <text x="96" y="43" text-anchor="middle" font-size="7.5" fill="#007AFF" font-weight="800">SPB AV</text>
+      </g>
+
+      <!-- SPB AR haut (Rechts) -->
+      <g id="z-spb_ar_d" onclick="openZone('spb_ar_d')" style="cursor:pointer">
+        <rect x="378" y="20" width="52" height="38" rx="8" fill="#007AFF" opacity="0.22" stroke="#007AFF" stroke-width="2"/>
+        <text x="404" y="43" text-anchor="middle" font-size="7.5" fill="#007AFF" font-weight="800">SPB AR</text>
+      </g>
+
+      <!-- SPB AV bas (Links) -->
+      <g id="z-spb_av_g" onclick="openZone('spb_av_g')" style="cursor:pointer">
+        <rect x="70" y="182" width="52" height="38" rx="8" fill="#007AFF" opacity="0.22" stroke="#007AFF" stroke-width="2"/>
+        <text x="96" y="205" text-anchor="middle" font-size="7.5" fill="#007AFF" font-weight="800">SPB AV</text>
+      </g>
+
+      <!-- SPB AR bas (Links) -->
+      <g id="z-spb_ar_g" onclick="openZone('spb_ar_g')" style="cursor:pointer">
+        <rect x="378" y="182" width="52" height="38" rx="8" fill="#007AFF" opacity="0.22" stroke="#007AFF" stroke-width="2"/>
+        <text x="404" y="205" text-anchor="middle" font-size="7.5" fill="#007AFF" font-weight="800">SPB AR</text>
+      </g>
+
+      <!-- Labels Rechts / Links -->
+      <text x="8" y="39" font-size="8" fill="#8E8E93" font-weight="600">Rechts</text>
+      <text x="8" y="205" font-size="8" fill="#8E8E93" font-weight="600">Links</text>
+      <!-- Labels AV / AR -->
+      <text x="120" y="14" text-anchor="middle" font-size="8" fill="#8E8E93" font-weight="600">AV</text>
+      <text x="380" y="14" text-anchor="middle" font-size="8" fill="#8E8E93" font-weight="600">AR</text>
+
+    </svg>
+  </div>
+
+  <!-- Calcul UZS global — sous la carte -->
+  <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:10px">
+    <div style="padding:12px 14px 8px;font-size:11px;font-weight:700;color:#8E8E93;text-transform:uppercase;letter-spacing:.06em">⚙ Calcul UZS</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #E5E5EA">
+      <div style="padding:12px 14px;border-right:1px solid #E5E5EA">
+        <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">💶 Taux / Tarief €/h</div>
+        <input type="number" id="g_taux" value="85" min="0" step="5" oninput="refreshAll()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+      </div>
+      <div style="padding:12px 14px">
+        <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">⏱ 1 werkuur = AE</div>
+        <input type="number" id="g_aeh" value="10" min="1" oninput="refreshAll()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+      </div>
+    </div>
+    <div style="border-top:1px solid #E5E5EA;display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E5E5EA">
+      <span style="font-size:14px;flex:1;color:#1C1C1E">🩹 Kleeftechniek +15%</span>
+      <label style="position:relative;width:50px;height:28px;flex-shrink:0">
+        <input type="checkbox" id="g_kleeft" onchange="refreshAll()" style="opacity:0;width:0;height:0">
+        <span id="g_kleeft_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:28px;cursor:pointer;transition:.2s"></span>
+        <span id="g_kleeft_th" style="position:absolute;width:24px;height:24px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span>
+      </label>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:13px 14px">
+      <span style="font-size:14px;flex:1;color:#1C1C1E">🔩 Aluminium +25%</span>
+      <label style="position:relative;width:50px;height:28px;flex-shrink:0">
+        <input type="checkbox" id="g_alum" onchange="refreshAll()" style="opacity:0;width:0;height:0">
+        <span id="g_alum_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:28px;cursor:pointer;transition:.2s"></span>
+        <span id="g_alum_th" style="position:absolute;width:24px;height:24px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span>
+      </label>
     </div>
   </div>
 
-  <div class="sec-title">Éléments · Onderdelen</div>
-  <div class="card" id="legend-list"></div>
 </div>
 
 <!-- DRAWER CALCUL INLINE (slide up depuis Voertuig) -->
@@ -369,26 +432,25 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
         <div style="font-size:10px;color:#8E8E93">AE: <b id="d_aex" style="color:#1A6FB5">0</b></div>
       </div>
     </div>
-    <!-- Paramètres propres compacts -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 12px">
-      <div style="background:#F2F2F7;border-radius:12px;padding:10px 12px">
-        <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Taux / Tarief €/h</div>
-        <input type="number" id="d_taux" value="70" min="0" oninput="calcDrawer()" style="border:none;outline:none;font-size:20px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+    <!-- Calcul UZS global -->
+    <div style="background:#F2F2F7;border-radius:14px;margin:0 12px 12px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+        <div style="padding:12px 14px;border-right:1px solid #E5E5EA;border-bottom:1px solid #E5E5EA">
+          <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">💶 Taux / Tarief €/h</div>
+          <input type="number" id="d_taux" value="85" min="0" oninput="calcDrawer();syncGlobal()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+        </div>
+        <div style="padding:12px 14px;border-bottom:1px solid #E5E5EA">
+          <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">⏱ 1 werkuur = AE</div>
+          <input type="number" id="d_aeh" value="10" min="1" oninput="calcDrawer();syncGlobal()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+        </div>
       </div>
-      <div style="background:#F2F2F7;border-radius:12px;padding:10px 12px">
-        <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">1 werkuur = AE</div>
-        <input type="number" id="d_aeh" value="10" min="1" oninput="calcDrawer()" style="border:none;outline:none;font-size:20px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
-      </div>
-    </div>
-    <!-- Toggles kleeft / alu -->
-    <div style="background:#F2F2F7;border-radius:12px;margin:0 12px 12px;overflow:hidden">
-      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #E5E5EA">
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E5E5EA">
         <span style="font-size:14px;flex:1">🩹 Kleeftechniek +15%</span>
-        <label style="position:relative;width:46px;height:26px;flex-shrink:0"><input type="checkbox" id="d_kleeft" onchange="calcDrawer()" style="opacity:0;width:0;height:0"><span id="d_kleeft_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:26px;cursor:pointer;transition:.2s"></span><span id="d_kleeft_th" style="position:absolute;width:22px;height:22px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></label>
+        <label style="position:relative;width:46px;height:26px;flex-shrink:0"><input type="checkbox" id="d_kleeft" onchange="calcDrawer();syncGlobal()" style="opacity:0;width:0;height:0"><span id="d_kleeft_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:26px;cursor:pointer;transition:.2s"></span><span id="d_kleeft_th" style="position:absolute;width:22px;height:22px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></label>
       </div>
-      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px">
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 14px">
         <span style="font-size:14px;flex:1">🔩 Aluminium +25%</span>
-        <label style="position:relative;width:46px;height:26px;flex-shrink:0"><input type="checkbox" id="d_alum" onchange="calcDrawer()" style="opacity:0;width:0;height:0"><span id="d_alum_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:26px;cursor:pointer;transition:.2s"></span><span id="d_alum_th" style="position:absolute;width:22px;height:22px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></label>
+        <label style="position:relative;width:46px;height:26px;flex-shrink:0"><input type="checkbox" id="d_alum" onchange="calcDrawer();syncGlobal()" style="opacity:0;width:0;height:0"><span id="d_alum_sl" style="position:absolute;inset:0;background:#D1D1D6;border-radius:26px;cursor:pointer;transition:.2s"></span><span id="d_alum_th" style="position:absolute;width:22px;height:22px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></label>
       </div>
     </div>
     <!-- Bouton sauvegarder -->
@@ -417,38 +479,71 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
 </div>
 
 <!-- RECAP -->
-<div id="page-recap" class="page">
-  <div class="sec-title">Récap · Overzicht</div>
-  <div class="card" id="recap-list"></div>
-  <div class="tot-box" id="tot-box"></div>
+<div id="page-recap" class="page" style="padding:8px">
+
+  <!-- Info dossier compacte -->
+  <div id="recap-dossier" style="background:#1A6FB5;color:#fff;border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-size:16px;font-weight:700" id="rd-dossier">—</div>
+      <div style="font-size:12px;opacity:.75" id="rd-plaat">—</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:13px;font-weight:600" id="rd-naam">—</div>
+      <div style="font-size:12px;opacity:.75" id="rd-datum">—</div>
+    </div>
+  </div>
+
+  <!-- TABLEAU STYLE EXCEL -->
+  <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:10px">
+
+    <!-- En-tête colonnes = style Excel header vert/gris -->
+    <div style="display:grid;grid-template-columns:2fr 40px 40px 40px 40px 40px 56px 60px;background:#1A6FB5;padding:8px 10px;gap:4px">
+      <div style="font-size:9px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.04em">Élément</div>
+      <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.8);text-align:center">Ø10</div>
+      <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.8);text-align:center">Ø20</div>
+      <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.8);text-align:center">Ø30</div>
+      <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.8);text-align:center">&gt;30</div>
+      <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.8);text-align:center">AE</div>
+      <div style="font-size:9px;font-weight:700;color:#FFD700;text-align:center">Heures</div>
+      <div style="font-size:9px;font-weight:700;color:#FFD700;text-align:right">Coût €</div>
+    </div>
+
+    <!-- Lignes du tableau -->
+    <div id="recap-rows"></div>
+
+    <!-- Ligne total -->
+    <div id="recap-total-row" style="display:grid;grid-template-columns:2fr 40px 40px 40px 40px 40px 56px 60px;padding:9px 10px;gap:4px;background:#EBF3FB;border-top:2px solid #1A6FB5">
+      <div style="font-size:12px;font-weight:700;color:#1A6FB5">TOTAAL</div>
+      <div style="font-size:11px;font-weight:700;color:#1A6FB5;text-align:center" id="rt-ae10">—</div>
+      <div style="font-size:11px;font-weight:700;color:#1A6FB5;text-align:center" id="rt-ae20">—</div>
+      <div style="font-size:11px;font-weight:700;color:#1A6FB5;text-align:center" id="rt-ae30">—</div>
+      <div style="font-size:11px;font-weight:700;color:#1A6FB5;text-align:center" id="rt-aex">—</div>
+      <div style="font-size:11px;font-weight:700;color:#1A6FB5;text-align:center" id="rt-ae">—</div>
+      <div style="font-size:11px;font-weight:700;color:#1A6FB5;text-align:center" id="rt-h">—</div>
+      <div style="font-size:12px;font-weight:700;color:#1A6FB5;text-align:right" id="rt-cout">—</div>
+    </div>
+  </div>
+
+  <!-- Suppléments -->
+  <div id="recap-suppl-wrap" style="display:none;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:10px">
+    <div style="background:#F2F2F7;padding:8px 12px;font-size:10px;font-weight:700;color:#8E8E93;text-transform:uppercase;letter-spacing:.05em">Suppléments · Supplementen</div>
+    <div id="recap-suppl-rows"></div>
+  </div>
+
+  <!-- Synthèse financière -->
+  <div style="background:#1A6FB5;border-radius:14px;padding:14px;color:#fff">
+    <div id="recap-synth"></div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.2);display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:14px;font-weight:700">TOTALE HERSTELPRIJS</div>
+      <div style="font-size:22px;font-weight:800" id="recap-grand-total">€ 0.00</div>
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.5);text-align:right;margin-top:4px" id="recap-footer">excl. BTW</div>
+  </div>
+
 </div>
 
 <!-- PARAMS -->
 <div id="page-params" class="page">
-
-  <div class="sec-title">Calcul UZS</div>
-  <div class="card">
-    <div class="param-box">
-      <div class="param-ic" style="background:rgba(26,111,181,.1)">💶</div>
-      <div class="param-lbl">Taux · Tarief (€/h)</div>
-      <input type="number" class="param-input" id="g_taux" value="70" min="0" step="5" oninput="refreshAll()">
-    </div>
-    <div class="param-box">
-      <div class="param-ic" style="background:rgba(0,122,255,.1)">⏱</div>
-      <div class="param-lbl">1 werkuur = AE</div>
-      <input type="number" class="param-input" id="g_aeh" value="10" min="1" oninput="refreshAll()">
-    </div>
-    <div class="tog-row">
-      <div class="tog-ic" style="background:rgba(52,199,89,.1)">🩹</div>
-      <div class="tog-txt"><div class="tog-main">Kleeftechniek</div><div class="tog-sub">+15% per onderdeel</div></div>
-      <label class="tog"><input type="checkbox" id="g_kleeft" onchange="refreshAll()"><span class="tog-sl"></span></label>
-    </div>
-    <div class="tog-row">
-      <div class="tog-ic" style="background:rgba(255,149,0,.1)">🔩</div>
-      <div class="tog-txt"><div class="tog-main">Aluminium</div><div class="tog-sub">+25% per onderdeel</div></div>
-      <label class="tog"><input type="checkbox" id="g_alum" onchange="refreshAll()"><span class="tog-sl"></span></label>
-    </div>
-  </div>
 
   <div class="sec-title">Champs dossier · Dossiervelden</div>
   <div class="card">
@@ -507,75 +602,7 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
   </button>
 </nav>
 
-<!-- MODAL ELEMENT -->
-<div class="modal" id="modal-el">
-  <div class="modal-hd">
-    <button class="modal-back" onclick="closeModal()">←</button>
-    <span class="modal-htitle" id="modal-title"></span>
-    <button class="modal-back" onclick="resetElement()" style="font-size:14px">↺</button>
-  </div>
-  <div class="modal-body">
-    <div class="rbar">
-      <div class="rb"><div class="rb-l">Total AE</div><div class="rb-v" id="m_total_ae">0</div></div>
-      <div class="rb"><div class="rb-l">Heures · Uren</div><div class="rb-v" id="m_heures">0.0</div></div>
-      <div class="rb"><div class="rb-l">Coût · Kost</div><div class="rb-v big" id="m_cout">€0</div></div>
-    </div>
-    <div class="imp-grid">
-      <div class="imp-card">
-        <div class="imp-diam">Ø10</div>
-        <div class="imp-lbl">Impacts base</div>
-        <div class="imp-row"><button class="brnd bm" onclick="adj(0,-1)">−</button><input type="number" id="m_i10" value="0" min="0" inputmode="numeric" oninput="calcModal()"><button class="brnd bp" onclick="adj(0,1)">+</button></div>
-        <div class="ae-lbl">AE: <span class="ae-v" id="m_ae10">0</span></div>
-      </div>
-      <div class="imp-card">
-        <div class="imp-diam">Ø20</div>
-        <div class="imp-lbl">Bijkomend</div>
-        <div class="imp-row"><button class="brnd bm" onclick="adj(1,-1)">−</button><input type="number" id="m_i20" value="0" min="0" inputmode="numeric" oninput="calcModal()"><button class="brnd bp" onclick="adj(1,1)">+</button></div>
-        <div class="ae-lbl">AE: <span class="ae-v" id="m_ae20">0</span></div>
-      </div>
-      <div class="imp-card">
-        <div class="imp-diam">Ø30</div>
-        <div class="imp-lbl">Bijkomend</div>
-        <div class="imp-row"><button class="brnd bm" onclick="adj(2,-1)">−</button><input type="number" id="m_i30" value="0" min="0" inputmode="numeric" oninput="calcModal()"><button class="brnd bp" onclick="adj(2,1)">+</button></div>
-        <div class="ae-lbl">AE: <span class="ae-v" id="m_ae30">0</span></div>
-      </div>
-      <div class="imp-card">
-        <div class="imp-diam">&gt;30</div>
-        <div class="imp-lbl">Bijkomend</div>
-        <div class="imp-row"><button class="brnd bm" onclick="adj(3,-1)">−</button><input type="number" id="m_ix" value="0" min="0" inputmode="numeric" oninput="calcModal()"><button class="brnd bp" onclick="adj(3,1)">+</button></div>
-        <div class="ae-lbl">AE: <span class="ae-v" id="m_aex">0</span></div>
-      </div>
-    </div>
-    <div class="sec-title">Paramètres propres · Eigen parameters</div>
-    <div class="card">
-      <div class="param-box">
-        <div class="param-ic" style="background:rgba(26,111,181,.1)">💶</div>
-        <div class="param-lbl">Taux / Tarief (€/h)</div>
-        <input type="number" class="param-input" id="m_taux" value="70" min="0" oninput="calcModal()">
-      </div>
-      <div class="param-box">
-        <div class="param-ic" style="background:rgba(0,122,255,.1)">⏱</div>
-        <div class="param-lbl">1 werkuur = AE</div>
-        <input type="number" class="param-input" id="m_aeh" value="10" min="1" oninput="calcModal()">
-      </div>
-      <div class="tog-row">
-        <div class="tog-ic" style="background:rgba(52,199,89,.1)">🩹</div>
-        <div class="tog-txt"><div class="tog-main">Kleeftechniek +15%</div></div>
-        <label class="tog"><input type="checkbox" id="m_kleeft" onchange="calcModal()"><span class="tog-sl"></span></label>
-      </div>
-      <div class="tog-row">
-        <div class="tog-ic" style="background:rgba(255,149,0,.1)">🔩</div>
-        <div class="tog-txt"><div class="tog-main">Aluminium +25%</div></div>
-        <label class="tog"><input type="checkbox" id="m_alum" onchange="calcModal()"><span class="tog-sl"></span></label>
-      </div>
-    </div>
-  </div>
-  <div class="modal-foot">
-    <button class="btn-sm btn grey" style="flex:1" onclick="closeModal()">Annuler</button>
-    <button class="btn-sm btn red" style="flex:2" onclick="saveModal()">✓ Opslaan · Sauvegarder</button>
-  </div>
-</div>
-
+<!-- modal supprimé -->
 <!-- CONFIRM -->
 <div class="conf" id="conf">
   <div class="conf-box">
@@ -614,7 +641,7 @@ const ZONE_COL={motorkap:'#1A6FB5',dak:'#1A6FB5',hayon:'#1A6FB5',spb_av_g:'#007A
 let DATA={},PHOTOS=[],SUPPLS=[],currentEl=null;
 const SUPPL_OPTIONS=['Polijsten / Reinigen','Antiroest','Demontage (N)','Kleeftechniek','Aluminium supplement','Noodlak','Polijsten dak','Polijsten motorkap','Andere · Autre'];
 
-function initData(){ELEMENTS.forEach(e=>{DATA[e.id]={i10:0,i20:0,i30:0,ix:0,taux:70,aeh:10,kleeft:false,alum:false};});}
+function initData(){ELEMENTS.forEach(e=>{DATA[e.id]={i10:0,i20:0,i30:0,ix:0,taux:85,aeh:10,kleeft:false,alum:false};});}
 initData();
 document.getElementById('datum').value=new Date().toISOString().split('T')[0];
 
@@ -676,7 +703,7 @@ function openZone(id){
   document.getElementById('d_i20').value=d.i20;
   document.getElementById('d_i30').value=d.i30;
   document.getElementById('d_ix').value=d.ix;
-  document.getElementById('d_taux').value=d.taux;
+  document.getElementById('d_taux').value=d.taux||85;
   document.getElementById('d_aeh').value=d.aeh;
   document.getElementById('d_kleeft').checked=d.kleeft;
   document.getElementById('d_alum').checked=d.alum;
@@ -711,7 +738,7 @@ function resetDrawerEl(){
 function getDrawerData(){
   return{i10:+document.getElementById('d_i10').value||0,i20:+document.getElementById('d_i20').value||0,
     i30:+document.getElementById('d_i30').value||0,ix:+document.getElementById('d_ix').value||0,
-    taux:+document.getElementById('d_taux').value||70,aeh:+document.getElementById('d_aeh').value||10,
+    taux:+document.getElementById('d_taux').value||85,aeh:+document.getElementById('d_aeh').value||10,
     kleeft:document.getElementById('d_kleeft').checked,alum:document.getElementById('d_alum').checked};
 }
 
@@ -741,43 +768,94 @@ function saveDrawer(){
   closeDrawer();buildLegend();showToast('✓ Opgeslagen');
 }
 
-// Anciennes fonctions modal (gardées pour compatibilité)
-function closeModal(){document.getElementById('modal-el').classList.remove('open');currentEl=null;}
-function resetElement(){resetDrawerEl();}
-function getModalData(){return getDrawerData();}
-function calcModal(){}
-function adj(f,delta){dadj(f,delta);}
-function saveModal(){saveDrawer();}
+// modal supprimé
 
 function buildRecap(){
-  const list=document.getElementById('recap-list');list.innerHTML='';
-  let tAE=0,tH=0,tC=0;
+  // Info dossier
+  const dnr=document.getElementById('dossier_nr').value||'—';
+  const plaat=document.getElementById('plaat').value||'—';
+  const naam=document.getElementById('naam').value||'—';
+  const datum=document.getElementById('datum').value||'—';
+  document.getElementById('rd-dossier').textContent='Dossier '+dnr;
+  document.getElementById('rd-plaat').textContent=plaat+' · '+document.getElementById('vin').value;
+  document.getElementById('rd-naam').textContent=naam;
+  document.getElementById('rd-datum').textContent=datum;
+
+  const rows=document.getElementById('recap-rows');
+  rows.innerHTML='';
+  let tAE=0,tH=0,tC=0,tAE10=0,tAE20=0,tAE30=0,tAEX=0;
+  let rowCount=0;
+
   ELEMENTS.forEach(e=>{
     const d=DATA[e.id],r=calcAE(d);
     if(d.i10+d.i20+d.i30+d.ix===0)return;
     tAE+=r.totalAE;tH+=r.heures;tC+=r.cout;
+    tAE10+=r.ae10;tAE20+=r.ae20;tAE30+=r.ae30;tAEX+=r.aex;
+    const bg=rowCount%2===0?'#fff':'#F8FAFC';
     const row=document.createElement('div');
-    row.className='menu-row';
-    row.innerHTML='<div class="menu-icon" style="background:rgba(52,199,89,.12)">'+e.ic+'</div>'
-      +'<div class="menu-label"><div class="menu-main">'+e.label+'</div>'
-      +'<div class="menu-sub">'+r.totalAE+' AE · '+r.heures.toFixed(1)+'h · '+d.taux+'€/h</div></div>'
-      +'<div class="menu-ae">€'+r.cout.toFixed(2)+'</div>';
-    list.appendChild(row);
+    row.style.cssText='display:grid;grid-template-columns:2fr 40px 40px 40px 40px 40px 56px 60px;padding:8px 10px;gap:4px;background:'+bg+';border-bottom:1px solid #F0F0F5;cursor:pointer';
+    row.onclick=()=>openZone(e.id);
+    const shortLabel=e.label.split('·')[0].trim().replace('Spatbord','Spb').replace('Porte','Prt').replace('Dakraam','Dkr').replace('Kofferdeksel / Hayon','Hayon').replace('Motorkap','Motorkap').replace('Pavillon','').replace('Capot','');
+    row.innerHTML=
+      '<div style="font-size:12px;font-weight:600;color:#1C1C1E;display:flex;align-items:center;gap:5px">'+e.ic+' '+shortLabel+'</div>'+
+      '<div style="font-size:11px;color:#636366;text-align:center">'+r.ae10+'</div>'+
+      '<div style="font-size:11px;color:#636366;text-align:center">'+r.ae20+'</div>'+
+      '<div style="font-size:11px;color:#636366;text-align:center">'+r.ae30+'</div>'+
+      '<div style="font-size:11px;color:#636366;text-align:center">'+r.aex+'</div>'+
+      '<div style="font-size:12px;font-weight:700;color:#1A6FB5;text-align:center">'+r.totalAE+'</div>'+
+      '<div style="font-size:11px;color:#636366;text-align:center">'+r.heures.toFixed(1)+'h</div>'+
+      '<div style="font-size:12px;font-weight:700;color:#1C1C1E;text-align:right">€'+r.cout.toFixed(2)+'</div>';
+    rows.appendChild(row);
+    rowCount++;
   });
-  if(!tAE)list.innerHTML='<div style="color:var(--muted);text-align:center;padding:20px;font-size:14px">Geen impact · Aucun impact</div>';
 
-  const taux=+document.getElementById('g_taux').value||70,aeh=+document.getElementById('g_aeh').value||10;
-  let sT=0;SUPPLS.forEach(s=>sT+=s.ae||0);
+  if(rowCount===0){
+    rows.innerHTML='<div style="color:#8E8E93;text-align:center;padding:24px;font-size:14px">Geen impact · Aucun impact</div>';
+  }
+
+  // Ligne total
+  document.getElementById('rt-ae10').textContent=tAE10;
+  document.getElementById('rt-ae20').textContent=tAE20;
+  document.getElementById('rt-ae30').textContent=tAE30;
+  document.getElementById('rt-aex').textContent=tAEX;
+  document.getElementById('rt-ae').textContent=Math.round(tAE*10)/10;
+  document.getElementById('rt-h').textContent=tH.toFixed(1)+'h';
+  document.getElementById('rt-cout').textContent='€'+tC.toFixed(2);
+
+  // Suppléments
+  const taux=+document.getElementById('g_taux').value||85;
+  const aeh=+document.getElementById('g_aeh').value||10;
+  let sT=0;
+  const supplRows=document.getElementById('recap-suppl-rows');
+  supplRows.innerHTML='';
+  const supplWrap=document.getElementById('recap-suppl-wrap');
+  SUPPLS.forEach((s,i)=>{
+    if(!s.ae&&!s.nom)return;
+    const c2=Math.round((s.ae/aeh)*taux*100)/100;
+    sT+=s.ae;
+    const bg=i%2===0?'#fff':'#F8FAFC';
+    supplRows.innerHTML+='<div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;gap:8px;background:'+bg+';border-bottom:1px solid #F0F0F5">'
+      +'<div style="font-size:13px;color:#1C1C1E">'+( s.nom||'—')+'</div>'
+      +'<div style="font-size:12px;font-weight:700;color:#1A6FB5;text-align:center">'+s.ae+' AE</div>'
+      +'<div style="font-size:12px;font-weight:700;color:#1C1C1E;text-align:right">€'+c2.toFixed(2)+'</div>'
+      +'</div>';
+  });
+  supplWrap.style.display=sT>0?'block':'none';
   const cS=Math.round((sT/aeh)*taux*100)/100;
-  const onderd=+document.getElementById('onderdelen').value||0,oude=+document.getElementById('oude_schades').value||0;
+
+  // Synthèse
+  const onderd=+document.getElementById('onderdelen').value||0;
+  const oude=+document.getElementById('oude_schades').value||0;
   const total=Math.round((tC+cS+onderd-oude)*100)/100;
-  document.getElementById('tot-box').innerHTML=
-    '<div class="tot-row"><span>Herstelprijs UZS</span><b>€ '+tC.toFixed(2)+'</b></div>'+
-    (sT>0?'<div class="tot-row"><span>Suppléments ('+sT+' AE)</span><b>€ '+cS.toFixed(2)+'</b></div>':'')+
-    (onderd>0?'<div class="tot-row"><span>Onderdelen</span><b>€ '+onderd.toFixed(2)+'</b></div>':'')+
-    (oude>0?'<div class="tot-row"><span>Oude schades (−)</span><b style="opacity:.7">− € '+oude.toFixed(2)+'</b></div>':'')+
-    '<div class="tot-row"><span>TOTAAL · TOTAL</span><b>€ '+total.toFixed(2)+'</b></div>'+
-    '<div style="font-size:11px;color:rgba(255,255,255,.45);text-align:right;margin-top:6px">excl. BTW · '+(document.getElementById('gebruiksderving').value||0)+' dagen</div>';
+  let synth='';
+  synth+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.15)"><span>Herstelprijs UZS</span><b>€ '+tC.toFixed(2)+'</b></div>';
+  if(sT>0)synth+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.15)"><span>Suppléments ('+sT+' AE)</span><b>€ '+cS.toFixed(2)+'</b></div>';
+  if(onderd>0)synth+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.15)"><span>Onderdelen</span><b>€ '+onderd.toFixed(2)+'</b></div>';
+  if(oude>0)synth+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.15)"><span style="opacity:.8">Oude schades (−)</span><b style="opacity:.8">− € '+oude.toFixed(2)+'</b></div>';
+  document.getElementById('recap-synth').innerHTML=synth;
+  document.getElementById('recap-grand-total').textContent='€ '+total.toFixed(2);
+  const geb=document.getElementById('gebruiksderving').value||0;
+  document.getElementById('recap-footer').textContent='excl. BTW'+( geb>0?' · '+geb+' dagen':'');
 }
 
 function refreshAll(){
@@ -838,12 +916,26 @@ function doReset(){
   ['dossier_nr','plaat','vin','naam','tel','btw','merk','model','g_email'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('datum').value=new Date().toISOString().split('T')[0];
   ['onderdelen','oude_schades','gebruiksderving'].forEach(id=>document.getElementById(id).value=0);
-  document.getElementById('g_taux').value=70;document.getElementById('g_aeh').value=10;
+  document.getElementById('g_taux').value=85;document.getElementById('g_aeh').value=10;
   document.getElementById('g_kleeft').checked=false;document.getElementById('g_alum').checked=false;
   renderPhotos();buildLegend();renderSupplList();showToast('↺ Reset OK');
 }
 
 // EXPORT
+function syncGlobal(){
+  const taux=+document.getElementById('d_taux').value||85;
+  const aeh=+document.getElementById('d_aeh').value||10;
+  const kl=document.getElementById('d_kleeft').checked;
+  const al=document.getElementById('d_alum').checked;
+  const gt=document.getElementById('g_taux');
+  const ga=document.getElementById('g_aeh');
+  const gk=document.getElementById('g_kleeft');
+  const gal=document.getElementById('g_alum');
+  if(gt)gt.value=taux;if(ga)ga.value=aeh;
+  if(gk)gk.checked=kl;if(gal)gal.checked=al;
+  ELEMENTS.forEach(e=>{DATA[e.id].taux=taux;DATA[e.id].aeh=aeh;DATA[e.id].kleeft=kl;DATA[e.id].alum=al;});
+}
+
 function buildWorkbook(){
   const wb=XLSX.utils.book_new();
   const dos=[['BIJLAGE 2 — Berekeningsrooster herstel dmv UZS'],[],
@@ -853,7 +945,16 @@ function buildWorkbook(){
     ['Tel. :',(document.getElementById('tel')||{value:''}).value],
     ['BTW :',(document.getElementById('btw')||{value:''}).value],
     ['Merk :',(document.getElementById('merk')||{value:''}).value,' Model :',(document.getElementById('model')||{value:''}).value],
-    [],[`Photos : ${PHOTOS.length}`]];
+    [],[`Photos : ${PHOTOS.length} photo(s) — voir onglet Photos`]];
+  // Ajouter feuille photos
+  if(PHOTOS.length>0){
+    const phRows=[['Photos du véhicule · Foto\'s van het voertuig'],[]];
+    PHOTOS.forEach((src,i)=>phRows.push(['Photo '+(i+1)+' :',src.substring(0,80)+'...']));
+    const phSheet=XLSX.utils.aoa_to_sheet(phRows);
+    // Largeur colonne B pour les data URLs
+    phSheet['!cols']=[{wch:12},{wch:60}];
+    XLSX.utils.book_append_sheet(wb,phSheet,'Photos');
+  }
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(dos),'Dossier');
   const rows=[['Élément / Onderdeel','Ø10','Ø20','Ø30','>Ø30','Suppl.','Total AE','Heures','Taux','Coût €']];
   let tAE=0,tH=0,tC=0;
@@ -903,6 +1004,162 @@ function exportEmail(){
     +'<button onclick="this.closest(\'div\').parentElement.remove()" style="background:#F2F2F7;color:#1C1C1E;border:none;padding:13px;border-radius:12px;font-size:14px;cursor:pointer">Plus tard · Later</button>'
     +'</div></div>';
   document.body.appendChild(ov);
+}
+
+function exportPDF(){
+  const dossier = document.getElementById('dossier_nr').value || 'UZS';
+  const plaat   = document.getElementById('plaat').value || '—';
+  const naam    = document.getElementById('naam').value || '—';
+  const datum   = document.getElementById('datum').value || '—';
+  const vin     = document.getElementById('vin').value || '—';
+  const taux    = +document.getElementById('g_taux').value || 85;
+  const aeh     = +document.getElementById('g_aeh').value || 10;
+
+  // Construire les lignes du tableau éléments
+  let tableRows = '';
+  let tAE=0,tH=0,tC=0;
+  ELEMENTS.forEach(e=>{
+    const d=DATA[e.id],r=calcAE(d);
+    if(d.i10+d.i20+d.i30+d.ix===0)return;
+    tAE+=r.totalAE;tH+=r.heures;tC+=r.cout;
+    tableRows+=`<tr>
+      <td>${e.label.split('·')[0].trim()}</td>
+      <td class="num">${d.i10}</td><td class="num">${d.i20}</td>
+      <td class="num">${d.i30}</td><td class="num">${d.ix}</td>
+      <td class="num"><b>${r.totalAE}</b></td>
+      <td class="num">${r.heures.toFixed(1)}</td>
+      <td class="num">${d.taux}</td>
+      <td class="num"><b>€${r.cout.toFixed(2)}</b></td>
+    </tr>`;
+  });
+
+  // Suppléments
+  let supplRows='';
+  let sT=0;
+  SUPPLS.forEach(s=>{
+    if(!s.ae&&!s.nom)return;
+    const cs=Math.round((s.ae/aeh)*taux*100)/100;
+    sT+=s.ae;
+    supplRows+=`<tr><td>${s.nom||'—'}</td><td class="num">${s.ae} AE</td><td class="num" colspan="7">€${cs.toFixed(2)}</td></tr>`;
+  });
+
+  // Totaux financiers
+  const cS=Math.round((sT/aeh)*taux*100)/100;
+  const onderd=+document.getElementById('onderdelen').value||0;
+  const oude=+document.getElementById('oude_schades').value||0;
+  const geb=+document.getElementById('gebruiksderving').value||0;
+  const total=Math.round((tC+cS+onderd-oude)*100)/100;
+
+  // Photos HTML
+  let photosHTML='';
+  if(PHOTOS.length>0){
+    photosHTML='<div class="section"><h2>Photos · Foto\'s</h2><div class="photos-wrap">';
+    PHOTOS.forEach((src,i)=>{
+      photosHTML+=`<img src="${src}" class="ph">`;
+    });
+    photosHTML+='</div></div>';
+  }
+
+  // HTML complet du PDF
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>Hagelschade UZS — ${dossier}</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;font-size:11px;color:#1C1C1E;padding:20px}
+    .header{background:#1A6FB5;color:#fff;padding:16px 20px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start}
+    .header h1{font-size:20px;font-weight:800;margin-bottom:4px}
+    .header .sub{font-size:11px;opacity:.8}
+    .header .right{text-align:right;font-size:12px}
+    .section{margin-bottom:16px}
+    .section h2{font-size:13px;font-weight:700;color:#1A6FB5;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #1A6FB5}
+    table{width:100%;border-collapse:collapse;font-size:10px}
+    th{background:#1A6FB5;color:#fff;padding:6px 8px;text-align:left;font-weight:700}
+    th.num{text-align:right}
+    td{padding:5px 8px;border-bottom:1px solid #E5E5EA}
+    tr:nth-child(even) td{background:#F8FAFC}
+    td.num{text-align:right}
+    .total-row td{background:#EBF3FB;font-weight:700;color:#1A6FB5;border-top:2px solid #1A6FB5}
+    .synth{background:#1A6FB5;color:#fff;border-radius:8px;padding:12px 16px;margin-top:8px}
+    .synth-row{display:flex;justify-content:space-between;padding:3px 0;font-size:11px;border-bottom:1px solid rgba(255,255,255,.2)}
+    .synth-row:last-child{border-bottom:none;font-size:14px;font-weight:800;padding-top:8px;margin-top:4px}
+    .photos-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .ph{width:calc(33% - 6px);border-radius:8px;object-fit:cover;aspect-ratio:4/3;max-height:200px}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+    .info-card{background:#F8FAFC;border-radius:8px;padding:10px 12px;border:1px solid #E5E5EA}
+    .info-label{font-size:9px;font-weight:700;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+    .info-val{font-size:13px;font-weight:600;color:#1C1C1E}
+    @media print{body{padding:10px}.ph{max-height:160px}}
+  </style>
+  </head><body>
+
+  <div class="header">
+    <div>
+      <div class="sub">Berekeningsrooster herstel dmv UZS</div>
+      <h1>Dossier ${dossier}</h1>
+      <div class="sub">${datum}</div>
+    </div>
+    <div class="right">
+      <div style="font-size:14px;font-weight:700">${naam}</div>
+      <div>${plaat}</div>
+      <div style="opacity:.7">${vin}</div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Nr plaat · Plaque</div><div class="info-val">${plaat}</div></div>
+    <div class="info-card"><div class="info-label">VIN</div><div class="info-val">${vin||'—'}</div></div>
+    <div class="info-card"><div class="info-label">Taux · Tarief</div><div class="info-val">${taux} €/h</div></div>
+    <div class="info-card"><div class="info-label">Datum expertise</div><div class="info-val">${datum}</div></div>
+  </div>
+
+  <div class="section">
+    <h2>De beschadigde delen · Éléments endommagés</h2>
+    <table>
+      <thead><tr>
+        <th>Élément · Onderdeel</th>
+        <th class="num">Ø10</th><th class="num">Ø20</th>
+        <th class="num">Ø30</th><th class="num">&gt;30</th>
+        <th class="num">Total AE</th>
+        <th class="num">Heures</th>
+        <th class="num">Taux</th>
+        <th class="num">Coût €</th>
+      </tr></thead>
+      <tbody>${tableRows}</tbody>
+      <tfoot><tr class="total-row">
+        <td>TOTAAL · TOTAL</td>
+        <td colspan="4"></td>
+        <td class="num">${Math.round(tAE*10)/10}</td>
+        <td class="num">${tH.toFixed(1)}h</td>
+        <td></td>
+        <td class="num">€${tC.toFixed(2)}</td>
+      </tr></tfoot>
+    </table>
+  </div>
+
+  ${supplRows?`<div class="section"><h2>Suppléments · Supplementen</h2><table><thead><tr><th>Description</th><th class="num">AE</th><th class="num" colspan="7">Coût €</th></tr></thead><tbody>${supplRows}</tbody></table></div>`:''}
+
+  <div class="synth">
+    <div class="synth-row"><span>Herstelprijs UZS</span><b>€ ${tC.toFixed(2)}</b></div>
+    ${sT>0?`<div class="synth-row"><span>Suppléments (${sT} AE)</span><b>€ ${cS.toFixed(2)}</b></div>`:''}
+    ${onderd>0?`<div class="synth-row"><span>Onderdelen</span><b>€ ${onderd.toFixed(2)}</b></div>`:''}
+    ${oude>0?`<div class="synth-row"><span>Oude schades (−)</span><b>− € ${oude.toFixed(2)}</b></div>`:''}
+    <div class="synth-row"><span>TOTALE HERSTELPRIJS HAGEL</span><b>€ ${total.toFixed(2)}</b></div>
+    <div style="font-size:9px;opacity:.5;margin-top:6px;text-align:right">excl. BTW${geb>0?' · '+geb+' dagen':''} · UPEX versie 8-2015</div>
+  </div>
+
+  ${photosHTML}
+
+  </body></html>`;
+
+  // Créer un blob et ouvrir — compatible iPhone Safari
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Hagelschade_' + dossier + '.html';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  showToast('📄 Document généré !');
 }
 
 function showToast(msg){
