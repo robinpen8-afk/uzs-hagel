@@ -342,7 +342,7 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
     <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #E5E5EA">
       <div style="padding:12px 14px;border-right:1px solid #E5E5EA">
         <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">💶 Taux / Tarief €/h</div>
-        <input type="number" id="g_taux" value="85" min="0" step="5" oninput="refreshAll()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+        <input type="number" id="g_taux" value="90" min="0" step="5" oninput="refreshAll()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
       </div>
       <div style="padding:12px 14px">
         <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">⏱ 1 werkuur = AE</div>
@@ -438,7 +438,7 @@ body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
         <div style="padding:12px 14px;border-right:1px solid #E5E5EA;border-bottom:1px solid #E5E5EA">
           <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">💶 Taux / Tarief €/h</div>
-          <input type="number" id="d_taux" value="85" min="0" oninput="calcDrawer();syncGlobal()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
+          <input type="number" id="d_taux" value="90" min="0" oninput="calcDrawer();syncGlobal()" style="border:none;outline:none;font-size:22px;font-weight:700;color:#1A6FB5;background:transparent;width:100%;font-family:inherit">
         </div>
         <div style="padding:12px 14px;border-bottom:1px solid #E5E5EA">
           <div style="font-size:10px;font-weight:600;color:#8E8E93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">⏱ 1 werkuur = AE</div>
@@ -642,7 +642,7 @@ const ZONE_COL={motorkap:'#1A6FB5',dak:'#1A6FB5',hayon:'#1A6FB5',spb_av_g:'#007A
 let DATA={},PHOTOS=[],SUPPLS=[],currentEl=null;
 const SUPPL_OPTIONS=['Polijsten / Reinigen','Antiroest','Demontage (N)','Kleeftechniek','Aluminium supplement','Noodlak','Polijsten dak','Polijsten motorkap','Andere · Autre'];
 
-function initData(){ELEMENTS.forEach(e=>{DATA[e.id]={i10:0,i20:0,i30:0,ix:0,taux:85,aeh:10,kleeft:false,alum:false};});}
+function initData(){ELEMENTS.forEach(e=>{DATA[e.id]={i10:0,i20:0,i30:0,ix:0,taux:90,aeh:10,kleeft:false,alum:false};});}
 initData();
 document.getElementById('datum').value=new Date().toISOString().split('T')[0];
 
@@ -704,7 +704,7 @@ function openZone(id){
   document.getElementById('d_i20').value=d.i20;
   document.getElementById('d_i30').value=d.i30;
   document.getElementById('d_ix').value=d.ix;
-  document.getElementById('d_taux').value=d.taux||85;
+  document.getElementById('d_taux').value=d.taux||90;
   document.getElementById('d_aeh').value=d.aeh;
   document.getElementById('d_kleeft').checked=d.kleeft;
   document.getElementById('d_alum').checked=d.alum;
@@ -739,7 +739,7 @@ function resetDrawerEl(){
 function getDrawerData(){
   return{i10:+document.getElementById('d_i10').value||0,i20:+document.getElementById('d_i20').value||0,
     i30:+document.getElementById('d_i30').value||0,ix:+document.getElementById('d_ix').value||0,
-    taux:+document.getElementById('d_taux').value||85,aeh:+document.getElementById('d_aeh').value||10,
+    taux:+document.getElementById('d_taux').value||90,aeh:+document.getElementById('d_aeh').value||10,
     kleeft:document.getElementById('d_kleeft').checked,alum:document.getElementById('d_alum').checked};
 }
 
@@ -824,7 +824,7 @@ function buildRecap(){
   document.getElementById('rt-cout').textContent='€'+tC.toFixed(2);
 
   // Suppléments
-  const taux=+document.getElementById('g_taux').value||85;
+  const taux=+document.getElementById('g_taux').value||90;
   const aeh=+document.getElementById('g_aeh').value||10;
   let sT=0;
   const supplRows=document.getElementById('recap-suppl-rows');
@@ -917,14 +917,14 @@ function doReset(){
   ['dossier_nr','plaat','vin','naam','tel','btw','merk','model','g_email'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('datum').value=new Date().toISOString().split('T')[0];
   ['onderdelen','oude_schades','gebruiksderving'].forEach(id=>document.getElementById(id).value=0);
-  document.getElementById('g_taux').value=85;document.getElementById('g_aeh').value=10;
+  document.getElementById('g_taux').value=90;document.getElementById('g_aeh').value=10;
   document.getElementById('g_kleeft').checked=false;document.getElementById('g_alum').checked=false;
   renderPhotos();buildLegend();renderSupplList();showToast('↺ Reset OK');
 }
 
 // EXPORT
 function syncGlobal(){
-  const taux=+document.getElementById('d_taux').value||85;
+  const taux=+document.getElementById('d_taux').value||90;
   const aeh=+document.getElementById('d_aeh').value||10;
   const kl=document.getElementById('d_kleeft').checked;
   const al=document.getElementById('d_alum').checked;
@@ -1013,7 +1013,7 @@ function exportPDF(){
   const naam    = document.getElementById('naam').value || '—';
   const datum   = document.getElementById('datum').value || '—';
   const vin     = document.getElementById('vin').value || '—';
-  const taux    = +document.getElementById('g_taux').value || 85;
+  const taux    = +document.getElementById('g_taux').value || 90;
   const aeh     = +document.getElementById('g_aeh').value || 10;
 
   // Construire les lignes du tableau éléments
