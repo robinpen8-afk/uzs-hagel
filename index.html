@@ -10,6 +10,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>UZS Hagelschade</title>
+<meta name="app-version" content="1.0.0">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -1149,17 +1150,53 @@ function exportPDF(){
 
   ${photosHTML}
 
-  </body></html>`;
+  
+<!-- POPUP MISE À JOUR -->
+<div id="update-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:flex-end;justify-content:center">
+  <div style="background:#fff;border-radius:20px 20px 0 0;padding:28px 20px;width:100%;max-width:500px;padding-bottom:calc(28px + env(safe-area-inset-bottom))">
+    <div style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="font-size:36px">🆕</div>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:#1C1C1E">Mise à jour disponible</div>
+          <div style="font-size:12px;color:#8E8E93;margin-top:2px">UZS Hagelschade</div>
+        </div>
+      </div>
+      <div style="background:#F2F2F7;border-radius:12px;padding:12px 14px" id="update-content">
+        <div style="font-size:13px;color:#8E8E93">Chargement des nouveautés...</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="doUpdate()" style="background:#1A6FB5;color:#fff;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">
+        ↺ Mettre à jour maintenant
+      </button>
+      <button onclick="dismissUpdate()" style="background:#F2F2F7;color:#1C1C1E;border:none;padding:13px;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit">
+        Plus tard
+      </button>
+    </div>
+  </div>
+</div>
 
-  // Créer un blob et ouvrir — compatible iPhone Safari
-  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'Hagelschade_' + dossier + '.html';
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(url), 1000);
-  showToast('📄 Document généré !');
+</body></html>`;
+
+  // Créer iframe cachée pour imprimer sans quitter l'app
+  let iframe = document.getElementById('_pdf_frame');
+  if(iframe) iframe.remove();
+  iframe = document.createElement('iframe');
+  iframe.id = '_pdf_frame';
+  iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:9999;background:#fff';
+  iframe.srcdoc = html;
+  document.body.appendChild(iframe);
+
+  iframe.onload = function(){
+    setTimeout(()=>{
+      iframe.contentWindow.print();
+      // Fermer l'iframe après impression
+      iframe.contentWindow.onafterprint = ()=>iframe.remove();
+      setTimeout(()=>{ if(document.getElementById('_pdf_frame')) iframe.remove(); }, 3000);
+    }, 600);
+  };
+  showToast('📄 Prêt à imprimer → Enregistrer en PDF');
 }
 
 function showToast(msg){
@@ -1167,9 +1204,93 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 
+
+// ── SYSTÈME DE MISE À JOUR ────────────────────────────────────────
+const APP_VERSION = '1.0.0';
+
+const CHANGELOG = {
+  '1.0.0': [
+    'Interface bilingue FR/NL',
+    'Carte du véhicule cliquable (paysage)',
+    'Calcul UZS intégré dans Voertuig',
+    'Export Excel et PDF',
+    'Suppléments avec sélection',
+    'Récap style tableau Excel',
+    'Photos intégrées dans le PDF',
+    'Popup mise à jour automatique',
+  ]
+};
+
+function checkUpdate(){
+  const lastVersion = localStorage.getItem('uzs_version');
+  if(lastVersion && lastVersion !== APP_VERSION){
+    // Nouvelle version — afficher le popup avec changelog
+    const changes = CHANGELOG[APP_VERSION] || ['Améliorations générales'];
+    let listHtml = changes.map(l=>'<li style="padding:3px 0;font-size:13px;color:#1C1C1E">'+l+'</li>').join('');
+    const el = document.getElementById('update-content');
+    if(el) el.innerHTML =
+      '<div style="font-size:12px;font-weight:700;color:#8E8E93;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">'+
+      'Nouveautés version '+APP_VERSION+'</div>'+
+      '<ul style="list-style:none;padding:0;margin:0">'+listHtml+'</ul>';
+    const popup = document.getElementById('update-popup');
+    if(popup) popup.style.display='flex';
+  } else {
+    localStorage.setItem('uzs_version', APP_VERSION);
+  }
+}
+
+function doUpdate(){
+  localStorage.setItem('uzs_version', APP_VERSION);
+  document.getElementById('update-popup').style.display='none';
+  // Vider le cache service worker et recharger
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(regs=>{
+      regs.forEach(r=>r.unregister());
+      window.location.reload(true);
+    });
+  } else {
+    window.location.reload(true);
+  }
+}
+
+function dismissUpdate(){
+  localStorage.setItem('uzs_version', APP_VERSION);
+  document.getElementById('update-popup').style.display='none';
+}
+
+// Lancer la vérification au démarrage
+setTimeout(checkUpdate, 1000);
+
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
 
 buildLegend();renderSupplList();renderPhotos();
 </script>
+
+<!-- POPUP MISE À JOUR -->
+<div id="update-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:flex-end;justify-content:center">
+  <div style="background:#fff;border-radius:20px 20px 0 0;padding:28px 20px;width:100%;max-width:500px;padding-bottom:calc(28px + env(safe-area-inset-bottom))">
+    <div style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="font-size:36px">🆕</div>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:#1C1C1E">Mise à jour disponible</div>
+          <div style="font-size:12px;color:#8E8E93;margin-top:2px">UZS Hagelschade</div>
+        </div>
+      </div>
+      <div style="background:#F2F2F7;border-radius:12px;padding:12px 14px" id="update-content">
+        <div style="font-size:13px;color:#8E8E93">Chargement des nouveautés...</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="doUpdate()" style="background:#1A6FB5;color:#fff;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">
+        ↺ Mettre à jour maintenant
+      </button>
+      <button onclick="dismissUpdate()" style="background:#F2F2F7;color:#1C1C1E;border:none;padding:13px;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit">
+        Plus tard
+      </button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
