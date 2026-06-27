@@ -10,7 +10,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>UZS Hagelschade</title>
-<meta name="app-version" content="1.0.0">
+<meta name="app-version" content="1.1.0">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -1206,9 +1206,17 @@ function showToast(msg){
 
 
 // ── SYSTÈME DE MISE À JOUR ────────────────────────────────────────
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.1.0';
 
 const CHANGELOG = {
+  '1.1.0': [
+    'Popup de mise à jour avec liste des nouveautés',
+    'SVG voiture redessiné en paysage',
+    'DKR Rechts et Links dans le toit',
+    'Export PDF avec impression directe',
+    'Boutons XLS et PDF dans la barre',
+    'Champs optionnels dans Params (Tel, BTW, Merk)',
+  ],
   '1.0.0': [
     'Interface bilingue FR/NL',
     'Carte du véhicule cliquable (paysage)',
